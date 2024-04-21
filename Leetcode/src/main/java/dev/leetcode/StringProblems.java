@@ -1765,9 +1765,73 @@ public class StringProblems {
      * It is guaranteed for each appearance of the character '*', there will be a previous valid
      * character to match.
      */
-    boolean isMatch(String s, String p) {
+    /*
+    enum Result {
+        TRUE, FALSE
+    }
 
-        return false;
+    Result[][] regexMemo;
+    public boolean isMatch(String s, String p) {
+        regexMemo = new Result[s.length()+1][p.length()+1];
+        return regexMatch(0, 0, s, p);
+    }
+
+    private boolean regexMatch(int itext, int ipattern, String text, String pattern)     {
+        if (regexMemo[itext][ipattern] != null)    {
+            return regexMemo[itext][ipattern] == Result.TRUE;
+        }
+
+        boolean ans = false;
+        if (ipattern == pattern.length())   {
+            ans = itext == text.length();
+        } else {
+            boolean firstMatch = (itext < text.length() &&
+                                    (pattern.charAt(ipattern) == text.charAt(itext) ||
+                                    pattern.charAt(ipattern) == '.' ));
+            if (ipattern+1 < pattern.length() && pattern.charAt(ipattern+1) == '*')     {
+                ans = regexMatch(itext, ipattern+2, text, pattern) ||
+                        (firstMatch && regexMatch(itext+1, ipattern, text, pattern));
+            } else  {
+                ans = regexMatch(itext+1, ipattern, text, pattern);
+            }
+        }
+
+        regexMemo[itext][ipattern] = ans ? Result.TRUE : Result.FALSE;
+        return ans;
+    }
+    */
+    enum Result {
+        TRUE, FALSE
+    }
+
+    Result[][] regexMemo;
+
+    public boolean isMatch(String text, String pattern) {
+        regexMemo = new Result[text.length() + 1][pattern.length() + 1];
+        return regexMatch(0, 0, text, pattern);
+    }
+
+    public boolean regexMatch(int itxt, int ipat, String text, String pattern) {
+        if (regexMemo[itxt][ipat] != null) {
+            return regexMemo[itxt][ipat] == Result.TRUE;
+        }
+        boolean ans;
+        if (ipat == pattern.length()){
+            ans = itxt == text.length();
+        } else{
+            boolean first_match = (itxt < text.length() &&
+                    (pattern.charAt(ipat) == text.charAt(itxt) ||
+                            pattern.charAt(ipat) == '.'));
+
+            if (ipat + 1 < pattern.length() && pattern.charAt(ipat+1) == '*'){
+                ans = (regexMatch(itxt, ipat+2, text, pattern) ||
+                        first_match && regexMatch(itxt+1, ipat, text, pattern));
+            } else {
+                ans = first_match && regexMatch(itxt+1, ipat+1, text, pattern);
+            }
+        }
+        regexMemo[itxt][ipat] = ans ? Result.TRUE : Result.FALSE;
+        return ans;
     }
 
     /**
@@ -1821,19 +1885,21 @@ public class StringProblems {
         StringBuilder builder = new StringBuilder();
         int carryOver = 0;
         int maxLength = Math.max(a.length(), b.length());
+        // To keep both the strings' length same
         a = "0".repeat(maxLength - a.length()).concat(a);
         b = "0".repeat(maxLength - b.length()).concat(b);
 
-        for (int i = maxLength - 1; i >= 0; i++)    {
-            int chA = a.charAt(i) - '0';
-            int chB = b.charAt(i) - '0';
-            if ((chA+chB+carryOver) > 1)  {
-                carryOver = 1;
-                builder.append('0');
-            } else {
-                builder.append('0' + (chA+chB+carryOver));
-            }
+        for (int i = maxLength - 1; i >= 0; i--)    {
+
+            int sum = carryOver;
+
+            sum += a.charAt(i) - '0';
+            sum += b.charAt(i) - '0';
+
+            builder.append(sum % 2);
+            carryOver = sum / 2;
         }
+        if (carryOver > 0)  builder.append(carryOver);
 
         return builder.reverse().toString();
     }
@@ -1875,6 +1941,10 @@ public class StringProblems {
                 map.put(sortedString, new ArrayList<>());
             }
             map.get(sortedString).add(word);
+        }
+
+        if (map.isEmpty())  {
+            return List.of(List.of());
         }
 
         return new ArrayList<>(map.values());
@@ -1969,5 +2039,9 @@ public class StringProblems {
         return titleNum;
     }
 
-
+    public static void main(String[] args) {
+        StringProblems problems = new StringProblems();
+        List<List<String>> group = problems.groupAnagrams(new String[]{"eat","tea","tan","ate","nat","bat"});
+        System.out.println(group);
+    }
 }

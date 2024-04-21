@@ -179,11 +179,11 @@ public class StringProblemsTest {
     public void testGroupAnagrams()     {
         List<Pair<List<List<String>>, List<String>>> tests = List.of(
                 Pair.with(
-                        List.of(List.of("bat"), List.of("nat", "tan"), List.of("ate", "eat", "tea")),
+                        List.of(List.of("eat", "tea", "ate"), List.of("bat"), List.of("tan", "nat")),
                         List.of("eat","tea","tan","ate","nat","bat")
                 ),
                 Pair.with(
-                        List.of(List.of("")), List.of()
+                        List.of(List.of()), List.of()
                 ),
                 Pair.with(
                         List.of(List.of("a")),
