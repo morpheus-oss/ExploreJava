@@ -2,9 +2,10 @@ package dev.leetcode;
 
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class StringProblemsTest {
         );
 
         testcases.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.defangIpAddress(test.getValue1())
                 )
@@ -36,7 +37,7 @@ public class StringProblemsTest {
                 0, List.of("X++","++X","--X","X--"),
                 3, List.of("++X","++X","X++")
         );
-        testcases.forEach((key, value) -> Assertions.assertEquals(key,
+        testcases.forEach((key, value) -> assertEquals(key,
                 problems.finalValueAfterOperations(value.toArray(new String[0]))));
     }
 
@@ -49,7 +50,7 @@ public class StringProblemsTest {
                         Triplet.with(0, "z", "ZZ")
                 );
         testCases.forEach(t ->
-                Assertions.assertEquals(
+                assertEquals(
                         t.getValue(0),
                         problems.numJewelsInStones(t.getValue1(), t.getValue2()))
         );
@@ -66,7 +67,7 @@ public class StringProblemsTest {
                 );
 
         testcases.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.findWordsContaining(
                                 test.getValue1().toArray(new String[0]),
@@ -82,7 +83,7 @@ public class StringProblemsTest {
                 Pair.with("alGalooG", "(al)G(al)()()G")
         );
         testcases.forEach(test ->
-                Assertions.assertEquals(test.getValue0(), problems.interpret(test.getValue1()))
+                assertEquals(test.getValue0(), problems.interpret(test.getValue1()))
         );
     }
 
@@ -95,7 +96,7 @@ public class StringProblemsTest {
                 Pair.with(3, List.of("please wait", "continue to fight", "continue to win"))
         );
         tests.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.mostWordsFound(test.getValue1().toArray(new String[0]))));
     }
@@ -111,7 +112,7 @@ public class StringProblemsTest {
         );
 
         testcases.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.isAcronymOfWords(
                                 test.getValue1().toArray(new String[0]),
@@ -128,7 +129,7 @@ public class StringProblemsTest {
                 Pair.with(2, "l|*e*et|c**o|*de|")
         );
         testcases.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.countAsterisks(test.getValue1())));
     }
@@ -143,7 +144,7 @@ public class StringProblemsTest {
                 Pair.with(0, "words and 987")
         );
         testcases.forEach(test ->
-                Assertions.assertEquals(test.getValue0(), problems.myAtoi(test.getValue1())));
+                assertEquals(test.getValue0(), problems.myAtoi(test.getValue1())));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class StringProblemsTest {
                 Triplet.with(false, "mississippi", "mis*is*p*.")
         );
 
-        cases.forEach(test -> Assertions.assertEquals(test.getValue0(),
+        cases.forEach(test -> assertEquals(test.getValue0(),
                                             problems.isMatch(test.getValue1(), test.getValue2())));
     }
 
@@ -169,7 +170,7 @@ public class StringProblemsTest {
         );
 
         tests.forEach(test ->
-                Assertions.assertEquals(
+                assertEquals(
                         test.getValue0(),
                         problems.addBinary(test.getValue1(), test.getValue2())));
     }
@@ -190,14 +191,123 @@ public class StringProblemsTest {
                         List.of("a")
                 )
         );
-        tests.forEach(
-                test -> Assertions.assertEquals(
+        tests.forEach(test -> assertEquals(
                             test.getValue0(),
                             problems.groupAnagrams(test.getValue1().toArray(new String[0]))
                         )
         );
     }
 
+    @Test
+    @DisplayName("1832. Check if the Sentence Is Pangram")
+    public void testCheckIfPangram()        {
+        List<Pair<Boolean, String>> tests = List.of(
+                Pair.with(Boolean.TRUE, "thequickbrownfoxjumpsoverthelazydog"),
+                Pair.with(Boolean.FALSE, "leetcode")
+        );
+
+        tests.forEach(test ->
+                assertEquals(test.getValue0(), problems.checkIfPangram(test.getValue1())));
+    }
+
+    @Test
+    @DisplayName("2864. Maximum Odd Binary Number")
+    public void testMaximumOddBinaryNumber()    {
+        List<Pair<String, String>> tests = List.of(
+                Pair.with("001", "010"),
+                Pair.with("1001", "0101")
+        );
+
+        tests.forEach(test -> assertEquals(
+                test.getValue0(), problems.maximumOddBinaryNumber(test.getValue1())
+        ));
+    }
+
+    @Test
+    @DisplayName("1614. Maximum Nesting Depth of the Parentheses")
+    public void testMaxDepth()      {
+        List<Pair<Integer, String>> tests = List.of(
+                Pair.with(3, "(1+(2*3)+((8)/4))+1"),
+                Pair.with(3, "(1)+((2))+(((3)))")
+        );
+
+        tests.forEach(test -> assertEquals(test.getValue0(), problems.maxDepth(test.getValue1())));
+    }
+
+    @Test
+    @DisplayName("2129. Capitalize the Title")
+    public void testCapitalizeTitle()       {
+        List<Pair<String, String>> tests = List.of(
+                Pair.with("Capitalize The Title", "capiTalIze tHe titLe"),
+                Pair.with("First Letter of Each Word", "First leTTeR of EACH Word"),
+                Pair.with("i Love Leetcode", "i lOve leetcode"),
+                Pair.with("", ""),
+                Pair.with(null, null)
+        );
+
+        tests.forEach(test -> assertEquals(test.getValue0(), problems.capitalizeTitle(test.getValue1())));
+    }
+
+    @Test
+    @DisplayName("2325. Decode the Message")
+    public void testDecodeMessage()     {
+        List<Triplet<String, String, String>> tests = List.of(
+                Triplet.with("the five boxing wizards jump quickly",
+                            "eljuxhpwnyrdgtqkviszcfmabo",
+                            "zwx hnfx lqantp mnoeius ycgk vcnjrdb"),
+                Triplet.with("this is a secret",
+                            "the quick brown fox jumps over the lazy dog",
+                            "vkbs bs t suepuv")
+        );
+
+        tests.forEach(test ->
+                assertEquals(
+                    test.getValue0(),
+                    problems.decodeMessage(test.getValue1(), test.getValue2())
+                ));
+    }
+
+    @Test
+    @DisplayName("2194. Cells in a Range on an Excel Sheet")
+    public void testCellsInRange()      {
+        List<Pair<List<String>, String>> tests = List.of(
+                Pair.with(List.of("K1","K2","L1","L2"), "K1:L2"),
+                Pair.with(List.of("A1","B1","C1","D1","E1","F1"), "A1:F1")
+        );
+
+        tests.forEach(test -> assertEquals(
+                test.getValue0(), problems.cellsInRange(test.getValue1())
+        ));
+    }
+
+    @Test
+    @DisplayName("2108. Find First Palindromic String in the Array")
+    public void testFirstPalindrome()       {
+        List<Pair<String, List<String>>> tests = List.of(
+                Pair.with("ada", List.of("abc","car","ada","racecar","cool")),
+                Pair.with("racecar", List.of("notapalindrome","racecar")),
+                Pair.with("", List.of("def","ghi"))
+        );
+
+        tests.forEach(test ->
+                assertEquals(
+                        test.getValue0(),
+                        problems.firstPalindrome(test.getValue1().toArray(new String[0])))
+        );
+    }
+
+    @Test
+    @DisplayName("1816. Truncate Sentence")
+    public void testTruncateSentence()      {
+        List<Triplet<String, String, Integer>> tests = List.of(
+                Triplet.with("Hello how are you", "Hello how are you Contestant", 4),
+                Triplet.with("What is the solution", "What is the solution to this problem", 4),
+                Triplet.with("chopper is not a tanuki", "chopper is not a tanuki", 5)
+        );
+
+        tests.forEach(test -> assertEquals(test.getValue0(),
+                problems.truncateSentence(test.getValue1(), test.getValue2())));
+    }
 
 
 }

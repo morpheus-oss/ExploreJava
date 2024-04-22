@@ -3,4 +3,6 @@
 
 Leetcode/target/**
 
-Leetcode/target/classes/**
+/Leetcode/target/classes/**
+/Leetcode/target/test-classes/**
+Leetcode/target/classes/dev/leetcode/ArrayProblems.class
