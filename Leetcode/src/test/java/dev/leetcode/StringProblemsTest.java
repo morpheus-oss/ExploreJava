@@ -277,4 +277,22 @@ public class StringProblemsTest {
             assertEquals(
                 test.getValue0(), problems.truncateSentence(test.getValue1(), test.getValue2())));
   }
+
+  @Test
+  @DisplayName("1668. Maximum Repeating Substring")
+  public void testMaxRepeating()  {
+    List<Triplet<Integer, String, String>> tests = List.of(
+            Triplet.with(2, "ababc", "ab"),
+            Triplet.with(1, "ababc", "ba"),
+            Triplet.with(0, "ababc", "ac"),
+            Triplet.with(1, "a", "a"),
+            Triplet.with(7, "aaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba")
+    );
+
+    tests.forEach(
+        test ->
+            assertEquals(
+                test.getValue0(), problems.maxRepeating(test.getValue1(), test.getValue2())));
+  }
+
 }

@@ -29,7 +29,7 @@ public class Interview150Test {
                 )
         );
 
-        tests.forEach(test -> assertEquals(
+        tests.forEach(test -> assertArrayEquals(
                 test.getValue0().stream()
                                 .mapToInt(val -> val)
                                 .toArray(),

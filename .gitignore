@@ -1,8 +1,14 @@
 .idea/codeStyles/**
 .idea/**
 
-Leetcode/target/**
 
+.gradle/**
+buildSrc/.gradle/** 
+buildSrc/build/**
+
+
+Leetcode/target/**
 /Leetcode/target/classes/**
-/Leetcode/target/test-classes/**
-Leetcode/target/classes/dev/leetcode/ArrayProblems.class
+
+/java-features/target
+/Leetcode/target

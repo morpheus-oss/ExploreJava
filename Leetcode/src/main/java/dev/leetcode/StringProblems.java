@@ -1635,4 +1635,126 @@ public class StringProblems {
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     return charCountMap.values().stream().anyMatch(val -> val <= 1);
   }
+
+  /**
+   * 5. Longest Palindromic Substring
+   *
+   * <pre>
+   * Given a string s, return the longest palindromic substring in s.
+   *
+   * Example 1:
+   *  Input: s = "babad"
+   *  Output: "bab"
+   *  Explanation: "aba" is also a valid answer.
+   *
+   * Example 2:
+   *  Input: s = "cbbd"
+   *  Output: "bb"
+   * </pre>
+   *
+   * Constraints:
+   *
+   * <ul>
+   *   <li>1 <= s.length <= 1000
+   *   <li>s consist of only digits and English letters.
+   * </ul>
+   *
+   * <p>
+   * @see <a
+   *     href="https://leetcode.com/problems/longest-palindromic-substring/
+   *     solutions/4212564/beats-96-49-5-different-approaches-brute-force-eac-dp-ma-recursion/">
+   *     Explained Manacher's Algorithm </a>
+   * @see <a href="https://www.youtube.com/watch?v=IvakBbsAhUU">Manacher's Algorithm (Video)</a>
+   * </p>
+   * @param str
+   * @return
+   */
+  public String longestPalindrome(String str) {
+    if (str.length() <= 1) {
+      return str;
+    }
+
+    int maxLen = 1;
+    String maxStr = str.substring(0, 1);
+    str = "#" + str.replaceAll("", "#") + "#";
+    System.out.println("Reformed input:" + str);
+    int[] pal = new int[str.length()];
+    int center = 0;
+    int right = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+      if (i < right) {
+        pal[i] = Math.min(right - i, pal[2 * center - i]);
+      }
+
+      while (i - pal[i] - 1 >= 0
+          && i + pal[i] + 1 < str.length()
+          && str.charAt(i - pal[i] - 1) == str.charAt(i + pal[i] + 1)) {
+        pal[i]++;
+      }
+
+      if (i + pal[i] > right) {
+        center = i;
+        right = i + pal[i];
+      }
+
+      if (pal[i] > maxLen) {
+        maxLen = pal[i];
+        maxStr = str.substring(i - pal[i], i + pal[i] + 1).replaceAll("#", "");
+      }
+    }
+
+    return maxStr;
+  }
+
+  /**
+   * 1668. Maximum Repeating Substring
+   * <pre>
+   * For a string sequence, a string word is k-repeating if word concatenated k times is a
+   * substring of sequence. The word's maximum k-repeating value is the highest value k where
+   * word is k-repeating in sequence. If word is not a substring of sequence, word's maximum
+   * k-repeating value is 0.
+   *
+   * Given strings sequence and word, return the maximum k-repeating value of word in sequence.
+   *
+   * Example 1:
+   * Input: sequence = "ababc", word = "ab"
+   * Output: 2
+   * Explanation: "abab" is a substring in "ababc".
+   *
+   * Example 2:
+   * Input: sequence = "ababc", word = "ba"
+   * Output: 1
+   * Explanation: "ba" is a substring in "ababc". "baba" is not a substring in "ababc".
+   *
+   * Example 3:
+   * Input: sequence = "ababc", word = "ac"
+   * Output: 0
+   * Explanation: "ac" is not a substring in "ababc".
+   * </pre>
+   *
+   * Constraints:
+   * <ul>
+   * <li>1 <= sequence.length <= 100 </li>
+   * <li>1 <= word.length <= 100 </li>
+   * <li>sequence and word contains only lowercase English letters. </li>
+   * </ul>
+   *
+   * @param sequence
+   * @param word
+   * @return
+   */
+  public int maxRepeating(String sequence, String word) {
+    int count = 0;
+    if (!sequence.contains(word)) return count;
+    if (sequence.equals(word)) return ++count;
+
+    while(sequence.contains(word))  {
+      count++;
+      int idx = sequence.indexOf(word);
+      sequence = sequence.substring( idx + (word.length()- 1));
+    }
+    return count;
+  }
+  
 }
